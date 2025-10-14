@@ -25,12 +25,14 @@ bsub -G compute-oncology -q oncology-interactive -Is \
   --tag jinglunli/hlahd_for_mhchammer:1.7.1 \
   --tag jinglunli/hlahd_for_mhchammer:latest \
   /scratch1/fs1/mgriffit/allen/hlahd_build
-
+```bash
+### In COMPUTE2
+```bash
 # Build the `.sif` file on Compute2
 apptainer build /storage1/fs1/mgriffit/Active/griffithlab/adhoc/allen/mhc-hammer/hlahd.sif \
   docker://docker.io/jinglunli/hlahd_for_mhchammer:1.7.1
 
 # Quick smoke tests
 apptainer exec /storage1/fs1/mgriffit/Active/griffithlab/adhoc/allen/mhc-hammer/hlahd.sif bowtie2 --version
-
+```bash
   
