@@ -29,7 +29,28 @@ Use the same pattern you used for CIBERSORTx, just point the path to your minima
 
 # (Option A) Name in the -a app, then pass tags:
 bsub -G compute-oncology -q oncology-interactive -Is \
-  -a 'docker_build(jinglunli/hlahd)' -- \
-  --tag jinglunli/hlahd:1.7.1 \
-  --tag jinglunli/hlahd:latest \
+  -a 'docker_build(jinglunli/hlahd_for_mhchammer)' -- \
+  --tag jinglunli/hlahd_for_mhchammer:1.7.1 \
+  --tag jinglunli/hlahd_for_mhchammer:latest \
   /scratch1/fs1/mgriffit/allen/hlahd_build
+
+
+
+2) Export the built Docker image to a tarball
+
+Still inside the docker_build session after it finishes:
+
+docker images | grep jinglunli/hlahd
+docker save jinglunli/hlahd:1.7.1 -o /scratch1/fs1/mgriffit/allen/hlahd_1.7.1.tar
+
+3) Convert the tarball to .sif with Apptainer/Singularity (outside of Docker, using Compute2)
+
+Back in a normal shell on the cluster (no docker_build needed):
+
+apptainer build /scratch1/fs1/mgriffit/allen/hlahd_1.7.1.sif \
+  docker-archive:///scratch1/fs1/mgriffit/allen/hlahd_1.7.1.tar
+
+
+
+
+  
