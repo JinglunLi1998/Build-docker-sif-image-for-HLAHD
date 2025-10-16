@@ -36,4 +36,21 @@ apptainer build /storage1/fs1/mgriffit/Active/griffithlab/adhoc/allen/mhc-hammer
 # Quick smoke tests
 apptainer exec /storage1/fs1/mgriffit/Active/griffithlab/adhoc/allen/mhc-hammer/hlahd.sif bowtie2 --version
 ```
+
+
+
+
+update to add the line:
+# file: Dockerfile
+FROM jinglunli/hlahd_for_mhchammer:1.7.1
+
+# just add the missing env variable — no rebuild of R or apt layers
+ENV HLAHD_VERSION=1.7.1
+
+
+
+bsub -G compute-oncology -q oncology-interactive -Is \
+  -a 'docker_build(jinglunli/hlahd_for_mhchammer)' -- \
+  --tag jinglunli/hlahd_for_mhchammer:1.7.1_fixed \
+  .
   
